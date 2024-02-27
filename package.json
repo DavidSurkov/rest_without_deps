@@ -1,0 +1,25 @@
+{
+  "name": "have_fun_with_ivan",
+  "version": "0.1.0",
+  "description": "Back for ivan",
+  "main": "/dist/main.js",
+  "scripts": {
+    "start": "node dist/main.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "David Surkov",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.10.2",
+    "typescript": "^5.3.2",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.3.2"
+  }
+}
