@@ -109,20 +109,6 @@ export class Router {
       for (const route of this.routes) {
         const match = req.pathname.match(route.regex);
         if (match && requestedMethod === route.method) {
-          res.setHeader('Access-Control-Allow-Origin', '*');
-          res.setHeader(
-            'Access-Control-Allow-Methods',
-            'GET, POST, PUT, PATCH, DELETE, OPTIONS',
-          );
-          res.setHeader(
-            'Access-Control-Allow-Headers',
-            'Content-Type, Authorization',
-          );
-          if (req.method === 'OPTIONS') {
-            res.writeHead(200);
-            res.end();
-            return;
-          }
           req.params = {}; // Initialize params in req object
           let paramIndex = 0; // Index to keep track of dynamic segments
           route.tokens.forEach((token) => {
