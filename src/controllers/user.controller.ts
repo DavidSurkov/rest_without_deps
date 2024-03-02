@@ -1,4 +1,8 @@
-import { HttpRequest, HttpResponse } from '../global.interface';
+import {
+  HttpRequest,
+  HttpResponse,
+  HttpResponseWithUserInLocals,
+} from '../global.interface';
 import { Users } from '../db/users';
 import { JwtService } from '../services/jwt.service';
 import { CookieKey, CookieService } from '../services/cookie.service';
@@ -41,6 +45,15 @@ export class UserController {
 
     const createdUser = await this.userRepository.createUser(req.body);
     res.end(JSON.stringify(createdUser));
+  }
+
+  public async getMyself(
+    req: HttpRequest<{ email: string; password: string }>,
+    res: HttpResponseWithUserInLocals,
+  ) {
+    const user = res.locals.user;
+    res.writeHead(200, 'OK');
+    res.end(JSON.stringify(user));
   }
 
   public async signIn(

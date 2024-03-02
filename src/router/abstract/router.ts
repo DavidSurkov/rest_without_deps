@@ -101,7 +101,7 @@ export class Router {
 
   public handleRequest(req: HttpRequest, res: HttpResponse) {
     try {
-      const parsedUrl = new URL(req.url || '', `http://${req.headers.host}`); // true to parse the query string
+      const parsedUrl = new URL(req.url || '', `http://${req.headers.host}`);
       req.pathname = parsedUrl.pathname;
       req.query = parsedUrl.searchParams; // Add query params to req object
       const requestedMethod = req?.method?.toLowerCase();

@@ -4,6 +4,11 @@ import { NotesController } from './controllers/notes.controller';
 import { UserController } from './controllers/user.controller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { CorsMiddleware } from './middlewares/cors.middleware';
+import { loadEnv } from './helpers/loadEnv';
+import * as process from 'process';
+
+// !important should be first as it loads envs
+loadEnv();
 
 const noteController = new NotesController();
 const userController = new UserController();
@@ -35,6 +40,9 @@ router.patch('/notes/:id', noteController.updateOne.bind(noteController), [
   authMiddleware.check.bind(authMiddleware),
 ]);
 
+router.get('/user', userController.getMyself.bind(userController), [
+  authMiddleware.check.bind(authMiddleware),
+]);
 router.post('/user/register', userController.register.bind(userController));
 router.post('/user/sign-in', userController.signIn.bind(userController));
 
@@ -43,6 +51,6 @@ const server = http.createServer(async (req, res) => {
     router.handleRequest(req as never, res);
   });
 });
-server.listen(3000, () => {
-  console.log('Server is listening on port 3000');
+server.listen(process.env.PORT, () => {
+  console.log('Server is listening on port', process.env.PORT);
 });
