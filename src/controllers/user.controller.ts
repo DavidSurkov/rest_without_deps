@@ -44,16 +44,23 @@ export class UserController {
     }
 
     const createdUser = await this.userRepository.createUser(req.body);
+    res.writeHead(201, 'Created');
     res.end(JSON.stringify(createdUser));
   }
 
-  public async getMyself(
-    req: HttpRequest<{ email: string; password: string }>,
-    res: HttpResponseWithUserInLocals,
-  ) {
+  public async getMyself(_req: HttpRequest, res: HttpResponseWithUserInLocals) {
     const user = res.locals.user;
     res.writeHead(200, 'OK');
     res.end(JSON.stringify(user));
+  }
+
+  public async signOut(_req: HttpRequest, res: HttpResponseWithUserInLocals) {
+    res.setHeader(
+      'Set-Cookie',
+      this.cookieService.createCookie(CookieKey.JWT, ''),
+    );
+    res.writeHead(204, 'No Content');
+    res.end();
   }
 
   public async signIn(

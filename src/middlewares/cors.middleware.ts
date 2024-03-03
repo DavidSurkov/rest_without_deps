@@ -3,10 +3,7 @@ import * as process from 'process';
 
 export class CorsMiddleware {
   apply(req: HttpRequest, res: HttpResponse, next: () => void) {
-    res.setHeader(
-      'Access-Control-Allow-Origin',
-      process.env.CLIENT_BASE_URL as string,
-    );
+    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_BASE_URL);
     res.setHeader(
       'Access-Control-Allow-Methods',
       'GET, POST, PUT, PATCH, DELETE, OPTIONS',

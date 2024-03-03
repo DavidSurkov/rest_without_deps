@@ -4,11 +4,13 @@ import { NotesController } from './controllers/notes.controller';
 import { UserController } from './controllers/user.controller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { CorsMiddleware } from './middlewares/cors.middleware';
-import { loadEnv } from './helpers/loadEnv';
+import { loadEnv, checkRequiredEnvVariables } from './helpers/loadEnv';
 import * as process from 'process';
 
 // !important should be first as it loads envs
 loadEnv();
+const requiredVars = ['CLIENT_BASE_URL', 'PORT'] as const;
+checkRequiredEnvVariables(requiredVars);
 
 const noteController = new NotesController();
 const userController = new UserController();
@@ -45,6 +47,7 @@ router.get('/user', userController.getMyself.bind(userController), [
 ]);
 router.post('/user/register', userController.register.bind(userController));
 router.post('/user/sign-in', userController.signIn.bind(userController));
+router.delete('/user/sign-out', userController.signOut.bind(userController));
 
 const server = http.createServer(async (req, res) => {
   corsMiddleware.apply(req as never, res, () => {
