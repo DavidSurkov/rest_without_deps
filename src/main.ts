@@ -9,7 +9,7 @@ import * as process from 'process';
 
 // !important should be first as it loads envs
 loadEnv();
-const requiredVars = ['CLIENT_BASE_URL', 'PORT'] as const;
+const requiredVars = ['CLIENT_BASE_URL', 'PORT', 'JWT_SECRET'] as const;
 checkRequiredEnvVariables(requiredVars);
 
 const noteController = new NotesController();

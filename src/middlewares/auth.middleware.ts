@@ -21,6 +21,10 @@ export class AuthMiddleware {
       );
       if (!jwt) {
         res.writeHead(401, 'Unauthorised');
+        res.setHeader(
+          'Set-Cookie',
+          this.cookieService.createCookie(CookieKey.JWT, ''),
+        );
         res.end();
         return;
       }
@@ -29,6 +33,10 @@ export class AuthMiddleware {
       if (!validatedUser?.email || typeof validatedUser.email !== 'string') {
         console.error({ validatedUser });
         res.writeHead(401, 'Unauthorised');
+        res.setHeader(
+          'Set-Cookie',
+          this.cookieService.createCookie(CookieKey.JWT, ''),
+        );
         res.end();
         return;
       }
@@ -40,6 +48,10 @@ export class AuthMiddleware {
       if (!foundUser) {
         console.error({ foundUser });
         res.writeHead(401, 'Unauthorised');
+        res.setHeader(
+          'Set-Cookie',
+          this.cookieService.createCookie(CookieKey.JWT, ''),
+        );
         res.end();
         return;
       }
@@ -49,6 +61,10 @@ export class AuthMiddleware {
     } catch (e) {
       console.error(e);
       res.writeHead(401, 'Unauthorised');
+      res.setHeader(
+        'Set-Cookie',
+        this.cookieService.createCookie(CookieKey.JWT, ''),
+      );
       res.end();
       return;
     }
