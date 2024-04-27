@@ -1,5 +1,5 @@
 import { createHmac } from 'crypto';
-import * as process from 'process';
+import { config } from '../helpers/loadEnv';
 
 export class JwtService {
   private readonly header = {
@@ -7,7 +7,7 @@ export class JwtService {
     typ: 'JWT',
   } as const;
 
-  private readonly secret = process.env.JWT_SECRET;
+  private readonly secret = config.JWT_SECRET;
 
   private base64Url<T extends Record<string, unknown>>(source: T) {
     const encoded = Buffer.from(JSON.stringify(source)).toString('base64');

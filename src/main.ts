@@ -4,13 +4,12 @@ import { NotesController } from './controllers/notes.controller';
 import { UserController } from './controllers/user.controller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { CorsMiddleware } from './middlewares/cors.middleware';
-import { loadEnv, checkRequiredEnvVariables } from './helpers/loadEnv';
-import * as process from 'process';
+import { config } from './helpers/loadEnv';
 
-// !important should be first as it loads envs
-loadEnv();
-const requiredVars = ['CLIENT_BASE_URL', 'PORT', 'JWT_SECRET'] as const;
-checkRequiredEnvVariables(requiredVars);
+/*client.connect(config.PORT, config.DB_HOST, () => {
+  console.log('Connected to PostgreSQL server');
+  // After connecting, you would need to start the login process and send queries according to the PostgreSQL protocol.
+});*/
 
 const noteController = new NotesController();
 const userController = new UserController();
@@ -54,6 +53,6 @@ const server = http.createServer(async (req, res) => {
     router.handleRequest(req as never, res);
   });
 });
-server.listen(process.env.PORT, () => {
-  console.log('Server is listening on port', process.env.PORT);
+server.listen(config.PORT, () => {
+  console.log('Server is listening on port', config.PORT);
 });
